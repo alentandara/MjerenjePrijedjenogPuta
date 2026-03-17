@@ -1,6 +1,6 @@
-export const IME_APLIKACIJE='MJERENJEPRIJEDJENOGPUTA'
+export const IME_APLIKACIJE='MJERENJE PRIJEDJENOG PUTA'
 
 export const RouteNames={
     HOME: '/',
-    SMJEROVI: '/Unesi tip puta:' //ovo je ruta
+    TIPOVI: '/tipovi' //ovo je ruta
 }

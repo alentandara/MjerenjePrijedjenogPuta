@@ -20,8 +20,8 @@ export default function Izbornik() {
                         
                         <NavDropdown title="Programi" id="basic-nav-dropdown">
                             <NavDropdown.Item 
-                            onClick={()=>navigate(RouteNames.SMJEROVI)}
-                            >Smjerovi</NavDropdown.Item>
+                            onClick={()=>navigate(RouteNames.TIPOVI)}
+                            >Tipovi</NavDropdown.Item>
                            
                         </NavDropdown>
                     </Nav>
