@@ -8,19 +8,19 @@ export const tipovi = [
     {
         sifra: 2,
         naziv: 'Vožnja biciklom',
-        opis: 'Opis hodanja'
+        opis: 'Opis vožnje biciklom'
        
     },
      {
         sifra: 3,
         naziv: 'Vožnja automobilom',
-        opis: 'Opis hodanja'
+        opis: 'Opis vožnje automobilom'
        
     },
      {
         sifra: 4,
         naziv: 'Let zrakoplovom',
-        opis: 'Opis hodanja'
+        opis: 'Opis leta zrakoplovom'
        
     },
 ]
