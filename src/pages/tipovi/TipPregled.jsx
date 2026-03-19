@@ -16,13 +16,7 @@ export default function TipPregled(){
     }
 
     return(
-        <>
-            <ol>
-                {tipovi && tipovi.map((tip)=>(
-                    <li>{tip.naziv} </li>
-                ))}
-            </ol>
-        </>
 
+     
     )
 }
