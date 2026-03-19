@@ -26,5 +26,9 @@ export default function SmjerPregled(){
             ))}
         </ul>
         </>
+                            </td>
+                            <td><FormatDatuma datum={smjer.datumPokretanja}  />
+
+                            </td>
     )
 }
