@@ -8,6 +8,7 @@ import { RouteNames } from './constants'
 import { Route, Routes } from 'react-router-dom'
 import Home from './pages/Home'
 import TipPregled from './pages/tipovi/TipPregled'
+import TipNovi from './pages/tipovi/TipNovi'
 
 function App() {
  
@@ -17,6 +18,7 @@ function App() {
       <Routes>
         <Route path={RouteNames.HOME} element={<Home />} />
         <Route path={RouteNames.TIPOVI} element={<TipPregled />} />
+        <Route path={RouteNames.TIPOVI_NOVI} element={<TipNovi />} />
       </Routes>
       <hr />
       &copy; XXXXX

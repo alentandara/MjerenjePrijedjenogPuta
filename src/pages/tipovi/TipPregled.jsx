@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react"
 import TipService from "../../services/tipovi/TipService";
 import { Table } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import { RouteNames } from "../../constants";
 
 export default function TipPregled() {
 
@@ -18,6 +20,10 @@ export default function TipPregled() {
 
     return (
         <>
+         <Link to={RouteNames.TIPOVI_NOVI} 
+            className="btn btn-success w-100 mb-3 mt-3">
+                Dodavanje novog tipa
+            </Link>
             <Table>
                 <thead>
                     <tr>
@@ -28,7 +34,7 @@ export default function TipPregled() {
                 </thead>
                 <tbody>
                     {tipovi && tipovi.map((tip) => (
-                        <tr>
+                        <tr key={tip.sifra}>
                             <td>{tip.naziv}</td>
                             <td>{tip.opis}</td>
                             <td></td>

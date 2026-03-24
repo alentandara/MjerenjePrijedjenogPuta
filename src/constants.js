@@ -2,5 +2,6 @@ export const IME_APLIKACIJE='MJERENJE PRIJEDJENOG PUTA'
 
 export const RouteNames={
     HOME: '/',
-    TIPOVI: '/tipovi' //ovo je ruta
+    TIPOVI: '/tipovi', //ovo je ruta
+    TIPOVI_NOVI: '/tipovi/novi' //ovo je ruta
 }
