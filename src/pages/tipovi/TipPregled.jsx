@@ -9,14 +9,25 @@ export default function TipPregled() {
     const navigate = useNavigate()
     const [tipovi, setTipovi] = useState([])
 
+     async function ucitajTipove() {
+        await TipService.get().then((odgovor) => {
+            setTipovi(odgovor.data)
+
+        })
+    }
+
     useEffect(() => {
         ucitajTipove();
     }, [])
 
-    async function ucitajTipove() {
-        await TipService.get().then((odgovor) => {
-            setTipovi(odgovor.data)
-        })
+   
+
+    async function obrisi(sifra) {
+        if(!confirm('Sigurno obrisati')){
+            return
+        }
+        await TipService.obrisi(sifra)
+        ucitajTipove()
     }
 
     return (
@@ -41,6 +52,10 @@ export default function TipPregled() {
                             <td>
                                 <Button onClick={()=>{navigate(`/tipovi/${tip.sifra}`)}}>
                                     Promjeni
+                                </Button>
+                                &nbsp;&nbsp;
+                                 <Button variant="danger" onClick={()=>{obrisi(tip.sifra)}}>
+                                    Obriši
                                 </Button>
                             </td>
                         </tr>

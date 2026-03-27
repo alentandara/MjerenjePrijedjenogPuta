@@ -2,7 +2,7 @@ import { tipovi } from "./TipPodaci";
 
 // 1/4 Read od CRUD
 async function get() {
-    return {data: tipovi}
+    return {data: [...tipovi]}
 }
 
 async function getBySifra(sifra) {
@@ -29,10 +29,15 @@ function nadiIndex(sifra){
     return tipovi.findIndex(s=>s.sifra === parseInt(sifra))
 }
 
+async function obrisi(sifra) {
+    const index = nadiIndex(sifra)
+    tipovi.splice(index,1)
+}
 
 export default{
     get,
     dodaj,
     getBySifra,
-    promjeni
+    promjeni,
+    obrisi
 }
