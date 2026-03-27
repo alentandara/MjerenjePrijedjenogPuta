@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react"
 import TipService from "../../services/tipovi/TipService";
-import { Table } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Button, Table } from "react-bootstrap";
+import { Link, useNavigate } from "react-router-dom";
 import { RouteNames } from "../../constants";
 
 export default function TipPregled() {
 
+    const navigate = useNavigate()
     const [tipovi, setTipovi] = useState([])
 
     useEffect(() => {
@@ -37,7 +38,11 @@ export default function TipPregled() {
                         <tr key={tip.sifra}>
                             <td>{tip.naziv}</td>
                             <td>{tip.opis}</td>
-                            <td></td>
+                            <td>
+                                <Button onClick={()=>{navigate(`/tipovi/${tip.sifra}`)}}>
+                                    Promjeni
+                                </Button>
+                            </td>
                         </tr>
                     ))}
                 </tbody>
@@ -47,4 +52,3 @@ export default function TipPregled() {
 
     )
 }
-y

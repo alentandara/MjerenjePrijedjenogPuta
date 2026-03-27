@@ -9,6 +9,7 @@ import { Route, Routes } from 'react-router-dom'
 import Home from './pages/Home'
 import TipPregled from './pages/tipovi/TipPregled'
 import TipNovi from './pages/tipovi/TipNovi'
+import TipPromjena from './pages/tipovi/TipPromjena'
 
 function App() {
  
@@ -19,6 +20,7 @@ function App() {
         <Route path={RouteNames.HOME} element={<Home />} />
         <Route path={RouteNames.TIPOVI} element={<TipPregled />} />
         <Route path={RouteNames.TIPOVI_NOVI} element={<TipNovi />} />
+        <Route path={RouteNames.TIPOVI_PROMJENA} element={<TipPromjena />} />
       </Routes>
       <hr />
       &copy; XXXXX
