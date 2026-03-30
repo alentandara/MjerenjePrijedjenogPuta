@@ -23,7 +23,7 @@ function App() {
         <Route path={RouteNames.TIPOVI_PROMJENA} element={<TipPromjena />} />
       </Routes>
       <hr />
-      &copy; XXXXX
+      &copy; 2026
     </Container>
   )
 }
