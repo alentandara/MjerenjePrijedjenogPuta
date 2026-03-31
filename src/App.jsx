@@ -10,6 +10,7 @@ import Home from './pages/Home'
 import TipPregled from './pages/tipovi/TipPregled'
 import TipNovi from './pages/tipovi/TipNovi'
 import TipPromjena from './pages/tipovi/TipPromjena'
+import IzracunPuta from './pages/IzracunPuta'
 
 function App() {
  
@@ -21,6 +22,8 @@ function App() {
         <Route path={RouteNames.TIPOVI} element={<TipPregled />} />
         <Route path={RouteNames.TIPOVI_NOVI} element={<TipNovi />} />
         <Route path={RouteNames.TIPOVI_PROMJENA} element={<TipPromjena />} />
+
+        <Route path={RouteNames.IZRACUN_PUTA} element={<IzracunPuta />} />
       </Routes>
       <hr />
       &copy; 2026

@@ -4,5 +4,8 @@ export const RouteNames={
     HOME: '/',
     TIPOVI: '/tipovi', //ovo je ruta
     TIPOVI_NOVI: '/tipovi/novi', //ovo je ruta
-    TIPOVI_PROMJENA: '/tipovi/:sifra'
+    TIPOVI_PROMJENA: '/tipovi/:sifra',
+
+    IZRACUN_PUTA: '/izracun' 
 }
+
