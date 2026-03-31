@@ -11,6 +11,10 @@ export default function TipPregled() {
 
      async function ucitajTipove() {
         await TipService.get().then((odgovor) => {
+            if(!odgovor.success){
+                alert('Nije implementiran servis')
+                return
+            }
             setTipovi(odgovor.data)
 
         })

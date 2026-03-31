@@ -9,3 +9,4 @@ export const RouteNames={
     IZRACUN_PUTA: '/izracun' 
 }
 
+     export const DATA_SOURCE = 'localStorage';
