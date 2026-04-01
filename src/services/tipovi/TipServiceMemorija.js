@@ -2,11 +2,11 @@ import { tipovi } from "./TipPodaci";
 
 // 1/4 Read od CRUD
 async function get() {
-    return {data: [...tipovi]}
+    return {success:true,data: [...tipovi]}
 }
 
 async function getBySifra(sifra) {
-    return {data: tipovi.find(s => s.sifra === parseInt(sifra))}
+    return {success:true,data: tipovi.find(s => s.sifra === parseInt(sifra))}
 }
 
 // 2/4 Create od CRUD

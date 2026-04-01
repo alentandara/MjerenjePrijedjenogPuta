@@ -6,7 +6,11 @@ export const RouteNames={
     TIPOVI_NOVI: '/tipovi/novi', //ovo je ruta
     TIPOVI_PROMJENA: '/tipovi/:sifra',
 
+    PUTEVI: '/putevi', //ovo je ruta
+    PUTEVI_NOVI: '/putevi/novi', //ovo je ruta
+    PUTEVI_PROMJENA: '/putevi/:sifra',
+
     IZRACUN_PUTA: '/izracun' 
 }
-
-     export const DATA_SOURCE = 'localStorage';
+// memorija, localStorage
+     export const DATA_SOURCE = 'memorija';

@@ -23,6 +23,9 @@ export default function Izbornik() {
                             onClick={()=>navigate(RouteNames.TIPOVI)}
                             >Tipovi</NavDropdown.Item>
                             <NavDropdown.Item 
+                            onClick={()=>navigate(RouteNames.PUTEVI)}
+                            >Putevi</NavDropdown.Item>
+                            <NavDropdown.Item 
                             onClick={()=>navigate(RouteNames.IZRACUN_PUTA)}
                             >Izračun puta</NavDropdown.Item>
                         </NavDropdown>

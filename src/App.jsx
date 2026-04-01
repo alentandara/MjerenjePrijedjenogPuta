@@ -11,6 +11,9 @@ import TipPregled from './pages/tipovi/TipPregled'
 import TipNovi from './pages/tipovi/TipNovi'
 import TipPromjena from './pages/tipovi/TipPromjena'
 import IzracunPuta from './pages/IzracunPuta'
+import PutPregled from './pages/putevi/PutPregled'
+import PutNovi from './pages/putevi/PutNovi'
+import PutPromjena from './pages/putevi/PutPromjena'
 
 function App() {
  
@@ -22,6 +25,10 @@ function App() {
         <Route path={RouteNames.TIPOVI} element={<TipPregled />} />
         <Route path={RouteNames.TIPOVI_NOVI} element={<TipNovi />} />
         <Route path={RouteNames.TIPOVI_PROMJENA} element={<TipPromjena />} />
+
+        <Route path={RouteNames.PUTEVI} element={<PutPregled />} />
+        <Route path={RouteNames.PUTEVI_NOVI} element={<PutNovi />} />
+        <Route path={RouteNames.PUTEVI_PROMJENA} element={<PutPromjena />} />
 
         <Route path={RouteNames.IZRACUN_PUTA} element={<IzracunPuta />} />
       </Routes>
