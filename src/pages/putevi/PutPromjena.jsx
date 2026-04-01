@@ -4,7 +4,7 @@ import { RouteNames } from "../../constants";
 import TipService from "../../services/tipovi/TipService";
 import { useEffect, useState } from "react";
 
-export default function PutPromjena(){
+export default function duzinaPuta(){
 
     const navigate = useNavigate()
     const params = useParams()
