@@ -13,4 +13,4 @@ export const RouteNames={
     IZRACUN_PUTA: '/izracun' 
 }
 // memorija, localStorage
-     export const DATA_SOURCE = 'memorija';
+     export const DATA_SOURCE = 'localStorage';

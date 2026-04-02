@@ -1,3 +1,21 @@
-.pozadina{
-    background-color: antiquewhite;
+.pozadina {
+  position: relative;
+  background-color: antiquewhite;
+}
+
+.pozadina::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url('https://www.auto-karta-hrvatske.com/hr/karta-slavonije/');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  opacity: 0.15; 
+  z-index: 0;
+}
+
+.pozadina > * {
+  position: relative;
+  z-index: 1;
 }

@@ -34,6 +34,12 @@ export default function PutPregled() {
         ucitajPutove()
     }
 
+    function trajanje(startTime, endTime){
+        return startTime && endTime
+            ? ((endTime - startTime) / 1000).toFixed(1)
+            : 0;
+    }
+
     return (
         <>
          <Link to={RouteNames.PUTEVI_NOVI} 
@@ -55,9 +61,10 @@ export default function PutPregled() {
                         <tr key={put.sifra}>
                             <td>{put.naziv}</td>
                             <td>{put.tip}</td>
-                            <td>{put.trajanje}</td>
-                            <td>{put.duzinaPuta}</td>
-                            
+                            <td>
+                                {trajanje(new Date(put.pocetak),new Date(put.kraj))} s
+                            </td>
+                            <td>{put.duzinaPuta} m</td>
                             <td>
                                 <Button onClick={()=>{navigate(`/putevi/${put.sifra}`)}}>
                                     Promjeni
