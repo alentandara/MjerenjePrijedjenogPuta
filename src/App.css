@@ -7,7 +7,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  background-image: url('https://www.auto-karta-hrvatske.com/hr/karta-slavonije/');
+  background-image: url('public/karta.jpg');
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
