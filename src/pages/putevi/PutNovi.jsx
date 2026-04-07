@@ -2,7 +2,8 @@ import { Button, Col, Form, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { RouteNames } from "../../constants";
 import PutService from "../../services/putevi/PutService";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import TipService from "../../services/tipovi/TipService";
 
 export default function PutNovi() {
 
@@ -13,6 +14,7 @@ export default function PutNovi() {
     const [isTracking, setIsTracking] = useState(false);
     const [startTime, setStartTime] = useState(null);
     const [pozicije, setPozicije] = useState([])
+    const [tipovi, setTipovi] = useState([])
 
 
     async function dodaj(put) {
@@ -21,6 +23,21 @@ export default function PutNovi() {
         })
     }
 
+    async function ucitajTipove() {
+            await TipService.get().then((odgovor) => {
+                if(!odgovor.success){
+                    alert('Nije implementiran servis')
+                    return
+                }
+                setTipovi(odgovor.data)
+                console.table(odgovor.data)
+            })
+        }
+
+        useEffect(() => {
+                ucitajTipove();
+            }, [])
+        
 
 
 
@@ -49,6 +66,8 @@ export default function PutNovi() {
     }
 
     function startTracking() {
+
+        // kontrola da ne može početi sve dok nije unio naziv i tip
 
         setDistance(0);
         setStartTime(new Date());
@@ -110,7 +129,16 @@ export default function PutNovi() {
                     <Form.Control type="text" name="naziv" required />
                 </Form.Group>
 
-                tip dođe kasnije
+                <Form.Group controlId="tip">
+                    <Form.Label>Tip</Form.Label>
+                    
+                    <Form.Select name="tip" onChange={(e)=>setTravelType(e.target.value)}>
+                        <option key={0} value={0}>Odaberite tip</option>
+                        {tipovi && tipovi.map((tip) => (
+                        <option key={tip.sifra} value={tip.sifra}>{tip.naziv}</option>
+                    ))}
+                    </Form.Select>
+                </Form.Group>
 
 
                 <hr style={{ marginTop: '50px', border: '0' }} />

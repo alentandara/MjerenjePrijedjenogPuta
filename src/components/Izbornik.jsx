@@ -25,9 +25,7 @@ export default function Izbornik() {
                             <NavDropdown.Item 
                             onClick={()=>navigate(RouteNames.PUTEVI)}
                             >Putevi</NavDropdown.Item>
-                            <NavDropdown.Item 
-                            onClick={()=>navigate(RouteNames.IZRACUN_PUTA)}
-                            >Izračun puta</NavDropdown.Item>
+                            
                         </NavDropdown>
                     </Nav>
                 </Navbar.Collapse>

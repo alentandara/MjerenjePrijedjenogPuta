@@ -10,7 +10,6 @@ import Home from './pages/Home'
 import TipPregled from './pages/tipovi/TipPregled'
 import TipNovi from './pages/tipovi/TipNovi'
 import TipPromjena from './pages/tipovi/TipPromjena'
-import IzracunPuta from './pages/IzracunPuta'
 import PutPregled from './pages/putevi/PutPregled'
 import PutNovi from './pages/putevi/PutNovi'
 import PutPromjena from './pages/putevi/PutPromjena'
@@ -30,7 +29,6 @@ function App() {
         <Route path={RouteNames.PUTEVI_NOVI} element={<PutNovi />} />
         <Route path={RouteNames.PUTEVI_PROMJENA} element={<PutPromjena />} />
 
-        <Route path={RouteNames.IZRACUN_PUTA} element={<IzracunPuta />} />
       </Routes>
       <hr />
       &copy; 2026
