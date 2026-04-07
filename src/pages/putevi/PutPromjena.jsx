@@ -64,7 +64,7 @@ export default function duzinaPuta(){
 
             <Row>
                 <Col>
-                    <Link to={RouteNames.TIPOVI} className="btn btn-danger">
+                    <Link to={RouteNames.PUTEVI} className="btn btn-danger">
                     Odustani
                     </Link>
                 </Col>

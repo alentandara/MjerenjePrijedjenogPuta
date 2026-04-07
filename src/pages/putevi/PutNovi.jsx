@@ -9,13 +9,13 @@ export default function PutNovi() {
 
     const navigate = useNavigate()
 
-    const [travelType, setTravelType] = useState(1);
+    const [naziv, setNaziv] = useState("");
+    const [travelType, setTravelType] = useState(0);
     const [distance, setDistance] = useState(0);
     const [isTracking, setIsTracking] = useState(false);
     const [startTime, setStartTime] = useState(null);
     const [pozicije, setPozicije] = useState([])
     const [tipovi, setTipovi] = useState([])
-
 
     async function dodaj(put) {
         await PutService.dodaj(put).then(() => {
@@ -24,25 +24,18 @@ export default function PutNovi() {
     }
 
     async function ucitajTipove() {
-            await TipService.get().then((odgovor) => {
-                if(!odgovor.success){
-                    alert('Nije implementiran servis')
-                    return
-                }
-                setTipovi(odgovor.data)
-                console.table(odgovor.data)
-            })
-        }
+        await TipService.get().then((odgovor) => {
+            if (!odgovor.success) {
+                alert('Nije implementiran servis')
+                return
+            }
+            setTipovi(odgovor.data)
+        })
+    }
 
-        useEffect(() => {
-                ucitajTipove();
-            }, [])
-        
-
-
-
-    // izračun
-
+    useEffect(() => {
+        ucitajTipove();
+    }, [])
 
     const lastPosition = useRef(null);
     const watchId = useRef(null);
@@ -67,7 +60,11 @@ export default function PutNovi() {
 
     function startTracking() {
 
-        // kontrola da ne može početi sve dok nije unio naziv i tip
+        
+        if (!naziv.trim() || !travelType) {
+            alert("Morate unijeti naziv i odabrati tip!");
+            return;
+        }
 
         setDistance(0);
         setStartTime(new Date());
@@ -91,8 +88,7 @@ export default function PutNovi() {
 
             lastPosition.current = { latitude, longitude };
 
-            setPozicije(p => [...p,{ latitude, longitude }])
-           // console.log(pozicije)
+            setPozicije(p => [...p, { latitude, longitude }])
         });
     }
 
@@ -102,7 +98,7 @@ export default function PutNovi() {
         setIsTracking(false);
 
         dodaj({
-            naziv: document.getElementById('naziv').value,
+            naziv: naziv,
             tip: travelType,
             duzinaPuta: distance.toFixed(3),
             pocetak: startTime,
@@ -111,52 +107,50 @@ export default function PutNovi() {
         })
     }
 
-
-
-
-    // završio izračun
-
-
-
     return (
         <>
-            <h3>
-                Unos novog Puta
-            </h3>
+            <h3>Unos novog Puta</h3>
+
             <Form>
                 <Form.Group controlId="naziv">
                     <Form.Label>Naziv</Form.Label>
-                    <Form.Control type="text" name="naziv" required />
+                    <Form.Control
+                        type="text"
+                        name="naziv"
+                        value={naziv}
+                        onChange={(e) => setNaziv(e.target.value)}
+                        required
+                    />
                 </Form.Group>
 
                 <Form.Group controlId="tip">
                     <Form.Label>Tip</Form.Label>
-                    
-                    <Form.Select name="tip" onChange={(e)=>setTravelType(e.target.value)}>
-                        <option key={0} value={0}>Odaberite tip</option>
+
+                    <Form.Select
+                        name="tip"
+                        value={travelType}
+                        onChange={(e) => setTravelType(e.target.value)}
+                    >
+                        <option value={0}>Odaberite tip</option>
                         {tipovi && tipovi.map((tip) => (
-                        <option key={tip.sifra} value={tip.sifra}>{tip.naziv}</option>
-                    ))}
+                            <option key={tip.sifra} value={tip.sifra}>
+                                {tip.naziv}
+                            </option>
+                        ))}
                     </Form.Select>
                 </Form.Group>
-
 
                 <hr style={{ marginTop: '50px', border: '0' }} />
 
                 <Row>
-                   
                     <Col>
                         {!isTracking && (
-                            <>
-                               
-
-                                <Button
-                                    onClick={startTracking}
-                                    disabled={!travelType}
-                                >
-                                    Start
-                                </Button>
-                            </>
+                            <Button
+                                onClick={startTracking}
+                                disabled={!travelType || naziv.trim() === ""}
+                            >
+                                Start
+                            </Button>
                         )}
 
                         {isTracking && (
@@ -171,7 +165,6 @@ export default function PutNovi() {
                         )}
                     </Col>
                 </Row>
-
             </Form>
         </>
     )

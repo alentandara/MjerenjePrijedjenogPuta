@@ -6,6 +6,7 @@ export const putevi = [
         pocetak: '2026-04-02T19:47:00.0000',
         kraj: '2026-04-02T19:49:00.0000',
         duzinaPuta: 124,
+        opis: 'Unosi se naknadno',
         pozicije: [
             {
                 longitude: 12.888,
