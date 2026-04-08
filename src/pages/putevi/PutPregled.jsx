@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
 import PutService from "../../services/putevi/PutService";
 import { Button, Table } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
@@ -6,35 +6,32 @@ import { RouteNames } from "../../constants";
 
 export default function PutPregled() {
 
-    const navigate = useNavigate()
-    const [putevi, setPutovi] = useState([])
+    const navigate = useNavigate();
+    const [putevi, setPutovi] = useState([]);
 
-     async function ucitajPutove() {
+    async function ucitajPutove() {
         await PutService.get().then((odgovor) => {
-            if(!odgovor.success){
-                alert('Nije implementiran servis')
-                return
+            if (!odgovor.success) {
+                alert('Nije implementiran servis');
+                return;
             }
-            setPutovi(odgovor.data)
-
-        })
+            setPutovi(odgovor.data);
+        });
     }
 
     useEffect(() => {
         ucitajPutove();
-    }, [])
-
-   
+    }, []);
 
     async function obrisi(sifra) {
-        if(!confirm('Sigurno obrisati')){
-            return
+        if (!confirm('Sigurno obrisati')) {
+            return;
         }
-        await PutService.obrisi(sifra)
-        ucitajPutove()
+        await PutService.obrisi(sifra);
+        ucitajPutove();
     }
 
-    function trajanje(startTime, endTime){
+    function trajanje(startTime, endTime) {
         return startTime && endTime
             ? ((endTime - startTime) / 1000).toFixed(1)
             : 0;
@@ -42,17 +39,21 @@ export default function PutPregled() {
 
     return (
         <>
-         <Link to={RouteNames.PUTEVI_NOVI} 
-            className="btn btn-success w-100 mb-3 mt-3">
+            <Link
+                to={RouteNames.PUTEVI_NOVI}
+                className="btn btn-success w-100 mb-3 mt-3"
+            >
                 Dodavanje novog puta
             </Link>
-            <Table>
+
+            <Table striped bordered hover>
                 <thead>
                     <tr>
                         <th>Naziv</th>
                         <th>Tip</th>
                         <th>Trajanje</th>
                         <th>Dužina</th>
+                        <th>Opis</th>
                         <th>Akcija</th>
                     </tr>
                 </thead>
@@ -62,24 +63,42 @@ export default function PutPregled() {
                             <td>{put.naziv}</td>
                             <td>{put.tip}</td>
                             <td>
-                                {trajanje(new Date(put.pocetak),new Date(put.kraj))} s
+                                {trajanje(
+                                    new Date(put.pocetak),
+                                    new Date(put.kraj)
+                                )} s
                             </td>
                             <td>{put.duzinaPuta} m</td>
+
+                            {/* Opis */}
+                            <td>{put.opis ? put.opis : "-"}</td>
+
+                            {/* Akcije */}
                             <td>
-                                <Button onClick={()=>{navigate(`/putevi/${put.sifra}`)}}>
-                                    Promjeni
-                                </Button>
-                                &nbsp;&nbsp;
-                                 <Button variant="danger" onClick={()=>{obrisi(put.sifra)}}>
-                                    Obriši
-                                </Button>
+                                <div className="d-flex gap-2">
+                                    <Button
+                                        variant="primary"
+                                        onClick={() => {
+                                            navigate(`/putevi/${put.sifra}`);
+                                        }}
+                                    >
+                                        Promjeni
+                                    </Button>
+
+                                    <Button
+                                        variant="danger"
+                                        onClick={() => {
+                                            obrisi(put.sifra);
+                                        }}
+                                    >
+                                        Obriši
+                                    </Button>
+                                </div>
                             </td>
                         </tr>
                     ))}
                 </tbody>
             </Table>
         </>
-
-
-    )
+    );
 }

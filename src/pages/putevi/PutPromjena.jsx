@@ -3,31 +3,48 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { RouteNames } from "../../constants";
 import TipService from "../../services/tipovi/TipService";
 import { useEffect, useState } from "react";
+import PutService from "../../services/putevi/PutService";
 
 export default function duzinaPuta(){
 
     const navigate = useNavigate()
     const params = useParams()
-    const [tip, setTip] = useState({})
+    const [tipovi, setTipovi] = useState([])
+    const [tip, setTip] = useState(0)
+    const [put, setPut] = useState({})
 
     useEffect(()=>{
-        ucitajTip()
+        ucitajPut()
+        ucitajTipove()
     },[])
 
-    async function ucitajTip() {
-        await TipService.getBySifra(params.sifra).then((odgovor)=>{
+    async function ucitajPut() {
+            await PutService.getBySifra(params.sifra).then((odgovor)=>{
+                if(!odgovor.success){
+                    alert('Nije implementiran servis')
+                    return
+                }
+                const s = odgovor.data
+                setPut(s)
+                setTip(s.tip)
+            })
+        }
+
+    async function ucitajTipove() {
+        await TipService.get().then((odgovor)=>{
             if(!odgovor.success){
                 alert('Nije implementiran servis')
                 return
             }
             const s = odgovor.data
-            setTip(s)
+            setTipovi(s)
+            
         })
     }
 
-    async function promjeni(tip) {
-        await TipService.promjeni(params.sifra,tip).then(()=>{
-            navigate(RouteNames.TIPOVI)
+    async function promjeni(put) {
+        await PutService.promjeni(params.sifra,put).then(()=>{
+            navigate(RouteNames.PUTEVI)
         })
     }
 
@@ -36,7 +53,8 @@ export default function duzinaPuta(){
         const podaci = new FormData(e.target)
         promjeni({
             naziv: podaci.get('naziv'),
-            opis: podaci.get('opis')
+            opis: podaci.get('opis'),
+            tip: podaci.get('tip')
         })
     }
 
@@ -50,13 +68,32 @@ export default function duzinaPuta(){
             <Form.Group controlId="naziv">
                 <Form.Label>Naziv</Form.Label>
                 <Form.Control type="text" name="naziv" required 
-                defaultValue={tip.naziv}/>
+                defaultValue={put.naziv}/>
             </Form.Group>
 
-            <Form.Group controlId="opis">
+           
+
+            <Form.Group controlId="tip">
+                    <Form.Label>Tip</Form.Label>
+
+                    <Form.Select
+                        name="tip"
+                        value={tip}
+                        onChange={(e) => setTip(e.target.value)}
+                    >
+                        <option value={0}>Odaberite tip</option>
+                        {tipovi && tipovi.map((tip) => (
+                            <option key={tip.sifra} value={tip.sifra}>
+                                {tip.naziv}
+                            </option>
+                        ))}
+                    </Form.Select>
+                </Form.Group>
+
+                 <Form.Group controlId="opis">
                 <Form.Label>Opis</Form.Label>
                 <Form.Control type="text" name="opis" required 
-                defaultValue={tip.opis}/>
+                defaultValue={put.opis}/>
             </Form.Group>
            
 
