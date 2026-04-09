@@ -1,18 +1,21 @@
 .pozadina {
   position: relative;
-  background-color: antiquewhite;
+  overflow: hidden;
+  min-height: 100vh; 
 }
 
 .pozadina::before {
   content: "";
   position: absolute;
-  inset: 0;
-  background-image: url('public/karta.jpg');
+  inset: -20px;
+  background-image: url("/karta2.jpg");
   background-repeat: no-repeat;
   background-position: center;
-  background-size: contain;
-  opacity: 0.15; 
+  background-size: cover; 
+  opacity: 0.75;
   z-index: 0;
+
+  filter: blur(1px) brightness(1);
 }
 
 .pozadina > * {
