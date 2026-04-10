@@ -22,3 +22,24 @@
   position: relative;
   z-index: 1;
 }
+
+/* naslov */
+.naslov {
+  background-color: rgb(20 20 20 / 80%);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 10px;
+  display: inline-block;
+}
+
+
+.navbar {
+  background-color: rgb(255 255 255 / 30%) !important;
+  backdrop-filter: blur(1px);
+}
+
+
+nav {
+  background-color: rgb(255 255 255 / 20%) !important;
+  backdrop-filter: blur(1px);
+}
