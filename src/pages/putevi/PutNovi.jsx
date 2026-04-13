@@ -5,6 +5,9 @@ import PutService from "../../services/putevi/PutService";
 import { useEffect, useRef, useState } from "react";
 import TipService from "../../services/tipovi/TipService";
 
+
+import { GoogleMap, Polyline, Marker, useJsApiLoader } from "@react-google-maps/api";
+
 export default function PutNovi() {
 
     const navigate = useNavigate()
@@ -16,6 +19,11 @@ export default function PutNovi() {
     const [startTime, setStartTime] = useState(null);
     const [pozicije, setPozicije] = useState([])
     const [tipovi, setTipovi] = useState([])
+
+
+    const { isLoaded } = useJsApiLoader({
+        googleMapsApiKey: "TVOJ_API_KLJUC"
+    });
 
     async function dodaj(put) {
         await PutService.dodaj(put).then(() => {
@@ -60,7 +68,6 @@ export default function PutNovi() {
 
     function startTracking() {
 
-        
         if (!naziv.trim() || !travelType) {
             alert("Morate unijeti naziv i odabrati tip!");
             return;
@@ -69,27 +76,41 @@ export default function PutNovi() {
         setDistance(0);
         setStartTime(new Date());
         setIsTracking(true);
+        setPozicije([]);
 
-        watchId.current = navigator.geolocation.watchPosition((pos) => {
+        lastPosition.current = null; // ✅ FIX
 
-            const { latitude, longitude } = pos.coords;
+        watchId.current = navigator.geolocation.watchPosition(
+            (pos) => {
 
-            if (lastPosition.current) {
+                const { latitude, longitude } = pos.coords;
 
-                const d = calculateDistance(
-                    lastPosition.current.latitude,
-                    lastPosition.current.longitude,
-                    latitude,
-                    longitude
-                );
+                if (lastPosition.current) {
 
-                setDistance(prev => prev + d);
+                    const d = calculateDistance(
+                        lastPosition.current.latitude,
+                        lastPosition.current.longitude,
+                        latitude,
+                        longitude
+                    );
+
+                    setDistance(prev => prev + d);
+                }
+
+                lastPosition.current = { latitude, longitude };
+
+                setPozicije(p => [...p, { latitude, longitude }])
+            },
+            (err) => {
+                console.error(err);
+                alert("Greška GPS-a: " + err.message);
+            },
+            {
+                enableHighAccuracy: true,
+                timeout: 10000,
+                maximumAge: 0
             }
-
-            lastPosition.current = { latitude, longitude };
-
-            setPozicije(p => [...p, { latitude, longitude }])
-        });
+        );
     }
 
     function stopTracking() {
@@ -107,16 +128,37 @@ export default function PutNovi() {
         })
     }
 
+    const path = pozicije.map(p => ({
+        lat: p.latitude,
+        lng: p.longitude
+    }));
+
+    const center = path.length > 0
+        ? path[path.length - 1]
+        : { lat: 45.815, lng: 15.981 };
+
     return (
         <>
-            <h3>Unos novog Puta</h3>
+            {/* HEADER */}
+            <Row className="mb-3">
+                <Col>
+                    <h3>Unos novog Puta</h3>
+                </Col>
+                <Col className="text-end">
+                    <Button
+                        variant="secondary"
+                        onClick={() => navigate(RouteNames.PUTEVI)}
+                    >
+                        Odustani
+                    </Button>
+                </Col>
+            </Row>
 
             <Form>
                 <Form.Group controlId="naziv">
                     <Form.Label>Naziv</Form.Label>
                     <Form.Control
                         type="text"
-                        name="naziv"
                         value={naziv}
                         onChange={(e) => setNaziv(e.target.value)}
                         required
@@ -127,7 +169,6 @@ export default function PutNovi() {
                     <Form.Label>Tip</Form.Label>
 
                     <Form.Select
-                        name="tip"
                         value={travelType}
                         onChange={(e) => setTravelType(e.target.value)}
                     >
@@ -144,6 +185,7 @@ export default function PutNovi() {
 
                 <Row>
                     <Col>
+
                         {!isTracking && (
                             <Button
                                 onClick={startTracking}
@@ -155,14 +197,47 @@ export default function PutNovi() {
 
                         {isTracking && (
                             <>
-                                <h3>Praćenje u tijeku...</h3>
-                                <p>Udaljenost: {(distance / 1000).toFixed(3)} km</p>
-
-                                <Button onClick={stopTracking}>
+                            <Button onClick={stopTracking}>
                                     Stop
                                 </Button>
+                                <h3>Praćenje u tijeku...</h3>
+                                <p>Udaljenost: {(distance / 1000).toFixed(3)} km</p>
+                                <p>Točke: {pozicije.length}</p>
+
+                                {/* MAPA */}
+                                {isLoaded && (
+                                    <GoogleMap
+                                        mapContainerStyle={{ width: "100%", height: "400px" }}
+                                        center={center}
+                                        zoom={15}
+                                    >
+                                        {path.length > 0 && (
+                                            <Polyline
+                                                path={path}
+                                                options={{
+                                                    strokeColor: "#FF0000",
+                                                    strokeOpacity: 1,
+                                                    strokeWeight: 3
+                                                }}
+                                            />
+                                        )}
+
+                                        {path.length > 0 && (
+                                            <Marker position={path[0]} />
+                                        )}
+
+                                        {path.length > 1 && (
+                                            <Marker position={path[path.length - 1]} />
+                                        )}
+                                    </GoogleMap>
+                                )}
+
+                                <br />
+
+                                
                             </>
                         )}
+
                     </Col>
                 </Row>
             </Form>
