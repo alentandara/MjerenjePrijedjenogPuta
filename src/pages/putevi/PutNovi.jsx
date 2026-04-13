@@ -210,6 +210,10 @@ export default function PutNovi() {
                                         mapContainerStyle={{ width: "100%", height: "400px" }}
                                         center={center}
                                         zoom={15}
+                                        options={{
+                                            gestureHandling: "cooperative", // "cooperative" rješava problem skrolanja stranice
+                                            scrollwheel: false,            // Dodatno osiguranje da kotačić miša ne zumira bez potrebe
+                                        }}
                                     >
                                         {path.length > 0 && (
                                             <Polyline

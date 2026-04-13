@@ -68,7 +68,7 @@ export default function PutPregled() {
                                     new Date(put.kraj)
                                 )} s
                             </td>
-                            <td>{put.duzinaPuta} m</td>
+                            <td>{(put.duzinaPuta/10).toFixed(2)} m</td>
 
                             {/* Opis */}
                             <td>{put.opis ? put.opis : "-"}</td>
