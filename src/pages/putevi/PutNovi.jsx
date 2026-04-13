@@ -22,7 +22,7 @@ export default function PutNovi() {
 
 
     const { isLoaded } = useJsApiLoader({
-        googleMapsApiKey: "TVOJ_API_KLJUC"
+        googleMapsApiKey: "AIzaSyA6HNLT0VV3ou7XPQPxKa4kiUfOB2cyhFE"
     });
 
     async function dodaj(put) {
