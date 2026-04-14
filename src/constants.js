@@ -9,8 +9,11 @@ export const RouteNames={
     PUTEVI: '/putevi', //ovo je ruta
     PUTEVI_NOVI: '/putevi/novi', //ovo je ruta
     PUTEVI_PROMJENA: '/putevi/:sifra',
+    PUTEVI_KARTA: '/putevi/karta/:sifra',
 
     IZRACUN_PUTA: '/izracun' 
+
+
 }
 // memorija, localStorage
      export const DATA_SOURCE = 'localStorage';

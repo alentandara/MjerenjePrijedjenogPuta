@@ -13,6 +13,7 @@ import TipPromjena from './pages/tipovi/TipPromjena'
 import PutPregled from './pages/putevi/PutPregled'
 import PutNovi from './pages/putevi/PutNovi'
 import PutPromjena from './pages/putevi/PutPromjena'
+import PutKarta from './pages/putevi/PutKarta'
 
 function App() {
  
@@ -28,6 +29,7 @@ function App() {
         <Route path={RouteNames.PUTEVI} element={<PutPregled />} />
         <Route path={RouteNames.PUTEVI_NOVI} element={<PutNovi />} />
         <Route path={RouteNames.PUTEVI_PROMJENA} element={<PutPromjena />} />
+        <Route path={RouteNames.PUTEVI_KARTA} element={<PutKarta />} />
 
       </Routes>
       <hr />

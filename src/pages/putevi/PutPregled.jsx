@@ -119,12 +119,7 @@ export default function PutPregled() {
                                     </Button>
 
                                     <Button
-                                        variant="info"
-                                        onClick={() => {
-                                            setSelectedPut(put);
-                                            setShowMap(true);
-                                        }}
-                                        disabled={!put.pozicije || put.pozicije.length === 0}
+                                        onClick={() => navigate(`/putevi/karta/${put.sifra}`)}
                                     >
                                         Karta
                                     </Button>
