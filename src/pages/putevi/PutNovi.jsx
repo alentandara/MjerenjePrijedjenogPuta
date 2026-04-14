@@ -1,10 +1,9 @@
-import { Button, Col, Form, Row } from "react-bootstrap";
+import { Button, Col, Form, Row, Modal } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { RouteNames } from "../../constants";
 import PutService from "../../services/putevi/PutService";
 import { useEffect, useRef, useState } from "react";
 import TipService from "../../services/tipovi/TipService";
-
 
 import { GoogleMap, Polyline, Marker, useJsApiLoader } from "@react-google-maps/api";
 
@@ -17,9 +16,10 @@ export default function PutNovi() {
     const [distance, setDistance] = useState(0);
     const [isTracking, setIsTracking] = useState(false);
     const [startTime, setStartTime] = useState(null);
-    const [pozicije, setPozicije] = useState([])
-    const [tipovi, setTipovi] = useState([])
-
+    const [endTime, setEndTime] = useState(null);
+    const [pozicije, setPozicije] = useState([]);
+    const [tipovi, setTipovi] = useState([]);
+    const [showMapModal, setShowMapModal] = useState(false);
 
     const { isLoaded } = useJsApiLoader({
         googleMapsApiKey: "AIzaSyA6HNLT0VV3ou7XPQPxKa4kiUfOB2cyhFE"
@@ -48,9 +48,10 @@ export default function PutNovi() {
     const lastPosition = useRef(null);
     const watchId = useRef(null);
 
+    // ✅ HAVERSINE FORMULA
     function calculateDistance(lat1, lon1, lat2, lon2) {
-
         const R = 6371e3;
+
         const φ1 = lat1 * Math.PI / 180;
         const φ2 = lat2 * Math.PI / 180;
         const Δφ = (lat2 - lat1) * Math.PI / 180;
@@ -75,10 +76,11 @@ export default function PutNovi() {
 
         setDistance(0);
         setStartTime(new Date());
+        setEndTime(null);
         setIsTracking(true);
         setPozicije([]);
 
-        lastPosition.current = null; // ✅ FIX
+        lastPosition.current = null;
 
         watchId.current = navigator.geolocation.watchPosition(
             (pos) => {
@@ -86,7 +88,6 @@ export default function PutNovi() {
                 const { latitude, longitude } = pos.coords;
 
                 if (lastPosition.current) {
-
                     const d = calculateDistance(
                         lastPosition.current.latitude,
                         lastPosition.current.longitude,
@@ -118,14 +119,29 @@ export default function PutNovi() {
         navigator.geolocation.clearWatch(watchId.current);
         setIsTracking(false);
 
+        const krajVrijeme = new Date();
+        setEndTime(krajVrijeme);
+
         dodaj({
             naziv: naziv,
             tip: travelType,
             duzinaPuta: distance.toFixed(3),
             pocetak: startTime,
-            kraj: new Date().toISOString(),
+            kraj: krajVrijeme.toISOString(),
             pozicije: pozicije
         })
+    }
+
+    function getUkupnoVrijeme() {
+        if (!startTime || !endTime) return "";
+
+        const diff = new Date(endTime) - new Date(startTime);
+
+        const sec = Math.floor(diff / 1000) % 60;
+        const min = Math.floor(diff / (1000 * 60)) % 60;
+        const hr = Math.floor(diff / (1000 * 60 * 60));
+
+        return `${hr}h ${min}m ${sec}s`;
     }
 
     const path = pozicije.map(p => ({
@@ -139,7 +155,6 @@ export default function PutNovi() {
 
     return (
         <>
-            {/* HEADER */}
             <Row className="mb-3">
                 <Col>
                     <h3>Unos novog Puta</h3>
@@ -181,7 +196,7 @@ export default function PutNovi() {
                     </Form.Select>
                 </Form.Group>
 
-                <hr style={{ marginTop: '50px', border: '0' }} />
+                <hr style={{ marginTop: '30px' }} />
 
                 <Row>
                     <Col>
@@ -197,30 +212,34 @@ export default function PutNovi() {
 
                         {isTracking && (
                             <>
-                            <Button onClick={stopTracking}>
+                                <Button onClick={stopTracking}>
                                     Stop
                                 </Button>
-                                <h3>Praćenje u tijeku...</h3>
+
+                                <Button
+                                    variant="info"
+                                    className="ms-2"
+                                    onClick={() => setShowMapModal(true)}
+                                    disabled={pozicije.length === 0}
+                                >
+                                    Karta
+                                </Button>
+
+                                <h4 className="mt-3">Praćenje u tijeku...</h4>
                                 <p>Udaljenost: {(distance / 1000).toFixed(3)} km</p>
                                 <p>Točke: {pozicije.length}</p>
 
-                                {/* MAPA */}
                                 {isLoaded && (
                                     <GoogleMap
-                                        mapContainerStyle={{ width: "100%", height: "400px" }}
+                                        mapContainerStyle={{ width: "100%", height: "300px" }}
                                         center={center}
                                         zoom={15}
-                                        options={{
-                                            gestureHandling: "cooperative", // "cooperative" rješava problem skrolanja stranice
-                                            scrollwheel: false,            // Dodatno osiguranje da kotačić miša ne zumira bez potrebe
-                                        }}
                                     >
                                         {path.length > 0 && (
                                             <Polyline
                                                 path={path}
                                                 options={{
                                                     strokeColor: "#FF0000",
-                                                    strokeOpacity: 1,
                                                     strokeWeight: 3
                                                 }}
                                             />
@@ -235,16 +254,44 @@ export default function PutNovi() {
                                         )}
                                     </GoogleMap>
                                 )}
-
-                                <br />
-
-                                
                             </>
                         )}
 
                     </Col>
                 </Row>
             </Form>
+
+            {/* MODAL */}
+            <Modal show={showMapModal} onHide={() => setShowMapModal(false)} size="lg">
+                <Modal.Header closeButton>
+                    <Modal.Title>Prikaz puta</Modal.Title>
+                </Modal.Header>
+
+                <Modal.Body>
+                    <p><b>Početak:</b> {startTime && new Date(startTime).toLocaleString()}</p>
+                    <p><b>Kraj:</b> {endTime && new Date(endTime).toLocaleString()}</p>
+                    <p><b>Ukupno vrijeme:</b> {getUkupnoVrijeme()}</p>
+                    <p><b>Udaljenost:</b> {(distance / 1000).toFixed(3)} km</p>
+
+                    {isLoaded && (
+                        <GoogleMap
+                            mapContainerStyle={{ width: "100%", height: "300px" }}
+                            center={center}
+                            zoom={15}
+                        >
+                            {path.length > 0 && (
+                                <Polyline path={path} />
+                            )}
+                        </GoogleMap>
+                    )}
+                </Modal.Body>
+
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={() => setShowMapModal(false)}>
+                        Zatvori
+                    </Button>
+                </Modal.Footer>
+            </Modal>
         </>
     )
 }
