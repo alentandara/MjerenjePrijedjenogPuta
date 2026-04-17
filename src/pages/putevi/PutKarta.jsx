@@ -74,7 +74,7 @@ export default function PutKarta() {
 
         // 3. Konstante za izračun (bazirano na Mercatorovoj projekciji)
         const WORLD_DIM = { height: 256, width: 256 };
-        const ZOOM_MAX = 21;
+        const ZOOM_MAX = 10;
 
         function getZoom(diff, mapDim, worldDim) {
             // Formula: Zoom = log2(MapDim * 360 / (Diff * WorldDim))
