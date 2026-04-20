@@ -52,10 +52,22 @@ export default function PutKarta() {
 
   return (
     <>
-      <p><b>Početak:</b> {new Date(put.pocetak).toLocaleString()}</p>
-      <p><b>Kraj:</b> {new Date(put.kraj).toLocaleString()}</p>
-      <p><b>Ukupno vrijeme:</b> {getUkupnoVrijeme(put)}</p>
-      <p><b>Udaljenost:</b> {(put.duzinaPuta / 1000).toFixed(2)} km</p>
+      <p>
+        <b style={{ fontSize: "22px" }}>Početak:</b>{" "}
+        {new Date(put.pocetak).toLocaleString()}
+      </p>
+      <p>
+        <b style={{ fontSize: "22px" }}>Kraj:</b>{" "}
+        {new Date(put.kraj).toLocaleString()}
+      </p>
+      <p>
+        <b style={{ fontSize: "22px" }}>Ukupno vrijeme:</b>{" "}
+        {getUkupnoVrijeme(put)}
+      </p>
+      <p>
+        <b style={{ fontSize: "22px" }}>Udaljenost:</b>{" "}
+        {(put.duzinaPuta / 1000).toFixed(2)} km
+      </p>
 
       {isLoaded && (
         <GoogleMap
