@@ -2,7 +2,7 @@ import { GoogleMap, Polyline, Marker, useJsApiLoader } from "@react-google-maps/
 import { useEffect, useState, useCallback } from "react";
 import PutService from "../../services/putevi/PutService";
 import { Link, useParams } from "react-router-dom";
-import { Col, Row } from "react-bootstrap";
+import { Col, Form, Row } from "react-bootstrap";
 import { RouteNames } from "../../constants";
 
 export default function PutKarta() {
@@ -52,6 +52,11 @@ export default function PutKarta() {
 
   return (
     <>
+
+<Form.Control type="textarea" defaultValue={JSON.stringify(put.pozicije)}/>
+
+
+
       <p><b>Početak:</b> {new Date(put.pocetak).toLocaleString()}</p>
       <p><b>Kraj:</b> {new Date(put.kraj).toLocaleString()}</p>
       <p><b>Ukupno vrijeme:</b> {getUkupnoVrijeme(put)}</p>
@@ -79,6 +84,7 @@ export default function PutKarta() {
 
       <hr style={{ marginTop: "50px", border: "0" }} />
 
+      
       <Row>
         <Col>
           <Link to={RouteNames.PUTEVI} className="btn btn-danger">
