@@ -14,6 +14,9 @@ import PutPregled from './pages/putevi/PutPregled'
 import PutNovi from './pages/putevi/PutNovi'
 import PutPromjena from './pages/putevi/PutPromjena'
 import PutKarta from './pages/putevi/PutKarta'
+import OznakaPregled from './pages/oznake/OznakaPregled'
+import OznakaNovi from './pages/oznake/OznakaNovi'
+import OznakaPromjena from './pages/oznake/OznakaPromjena'
 
 function App() {
  
@@ -30,6 +33,11 @@ function App() {
         <Route path={RouteNames.PUTEVI_NOVI} element={<PutNovi />} />
         <Route path={RouteNames.PUTEVI_PROMJENA} element={<PutPromjena />} />
         <Route path={RouteNames.PUTEVI_KARTA} element={<PutKarta />} />
+
+
+        <Route path={RouteNames.OZNAKE} element={<OznakaPregled />} />
+        <Route path={RouteNames.OZNAKE_NOVI} element={<OznakaNovi />} />
+        <Route path={RouteNames.OZNAKE_PROMJENA} element={<OznakaPromjena />} />
 
       </Routes>
       <hr />
