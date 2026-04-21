@@ -8,19 +8,19 @@ export default function TipNovi(){
     const navigate = useNavigate()
 
     async function dodaj(Tip){
-        //console.table(Tip) // ovo je za kontrolu da li je sve OK
         await TipService.dodaj(Tip).then(()=>{
             navigate(RouteNames.TIPOVI)
         })
     }
 
-
-    function odradiSubmit(e){ //e je event
-        e.preventDefault() // nemoj odraditi submit
+    function odradiSubmit(e){
+        e.preventDefault()
         const podaci = new FormData(e.target)
+
         dodaj({
             naziv: podaci.get('naziv'),
-            opis: podaci.get('opis')
+            opis: podaci.get('opis'),
+            oznake: podaci.get('oznake')
         })
     }
 
@@ -30,6 +30,7 @@ export default function TipNovi(){
             Unos novog Tipa
         </h3>
         <Form onSubmit={odradiSubmit}>
+            
             <Form.Group controlId="naziv">
                 <Form.Label>Naziv</Form.Label>
                 <Form.Control type="text" name="naziv" required />
@@ -39,16 +40,21 @@ export default function TipNovi(){
                 <Form.Label>Opis</Form.Label>
                 <Form.Control type="text" name="opis" required />
             </Form.Group>
-           
+
+            <Form.Group controlId="oznake">
+                <Form.Label>Oznake</Form.Label>
+                <Form.Control type="text" name="oznake" />
+            </Form.Group>
 
             <hr style={{marginTop: '50px', border: '0'}} />
 
             <Row>
                 <Col>
                     <Link to={RouteNames.TIPOVI} className="btn btn-danger">
-                    Odustani
+                        Odustani
                     </Link>
                 </Col>
+
                 <Col>
                     <Button type="submit" variant="success">
                         Dodaj novi Tip

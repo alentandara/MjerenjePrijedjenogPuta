@@ -53,21 +53,32 @@ export default function PutKarta() {
   return (
     <>
       <p>
-        <b style={{ fontSize: "22px" }}>Početak:</b>{" "}
-        {new Date(put.pocetak).toLocaleString()}
-      </p>
-      <p>
-        <b style={{ fontSize: "22px" }}>Kraj:</b>{" "}
-        {new Date(put.kraj).toLocaleString()}
-      </p>
-      <p>
-        <b style={{ fontSize: "22px" }}>Ukupno vrijeme:</b>{" "}
-        {getUkupnoVrijeme(put)}
-      </p>
-      <p>
-        <b style={{ fontSize: "22px" }}>Udaljenost:</b>{" "}
-        {(put.duzinaPuta / 1000).toFixed(2)} km
-      </p>
+  <b style={{ fontSize: "22px" }}>Početak:</b>{" "}
+  <span style={{ fontSize: "22px" }}>
+    {new Date(put.pocetak).toLocaleString()}
+  </span>
+</p>
+
+<p>
+  <b style={{ fontSize: "22px" }}>Kraj:</b>{" "}
+  <span style={{ fontSize: "22px" }}>
+    {new Date(put.kraj).toLocaleString()}
+  </span>
+</p>
+
+<p>
+  <b style={{ fontSize: "22px" }}>Ukupno vrijeme:</b>{" "}
+  <span style={{ fontSize: "22px" }}>
+    {getUkupnoVrijeme(put)}
+  </span>
+</p>
+
+<p>
+  <b style={{ fontSize: "22px" }}>Udaljenost:</b>{" "}
+  <span style={{ fontSize: "22px" }}>
+    {(put.duzinaPuta / 1000).toFixed(2)} km
+  </span>
+</p>
 
       {isLoaded && (
         <GoogleMap
