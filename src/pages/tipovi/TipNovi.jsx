@@ -2,6 +2,7 @@ import { Button, Col, Form, Row } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { RouteNames } from "../../constants";
 import TipService from "../../services/tipovi/TipService";
+import Oznake from "../../services/tipovi/Oznake";
 
 export default function TipNovi(){
 
@@ -13,14 +14,28 @@ export default function TipNovi(){
         })
     }
 
-    function odradiSubmit(e){
+    async function odradiSubmit(e){
         e.preventDefault()
         const podaci = new FormData(e.target)
 
-        dodaj({
+        // uzmi oznake iz inputa
+        const oznakeLista = podaci.get('oznake')
+            ? podaci.get('oznake')
+                .split(',')
+                .map(o => o.trim())
+                .filter(o => o !== '')
+            : [];
+
+        // spremi oznake u Oznake.js
+        for(const oznaka of oznakeLista){
+            await Oznake.dodaj(oznaka);
+        }
+
+        // spremi tip zajedno sa oznakama
+        await dodaj({
             naziv: podaci.get('naziv'),
             opis: podaci.get('opis'),
-            oznake: podaci.get('oznake')
+            oznake: oznakeLista
         })
     }
 
@@ -29,6 +44,7 @@ export default function TipNovi(){
         <h3>
             Unos novog Tipa
         </h3>
+
         <Form onSubmit={odradiSubmit}>
             
             <Form.Group controlId="naziv">
@@ -42,7 +58,7 @@ export default function TipNovi(){
             </Form.Group>
 
             <Form.Group controlId="oznake">
-                <Form.Label>Oznake</Form.Label>
+                <Form.Label>Oznake (odvoji zarezom)</Form.Label>
                 <Form.Control type="text" name="oznake" />
             </Form.Group>
 
