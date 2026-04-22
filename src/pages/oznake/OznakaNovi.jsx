@@ -27,7 +27,7 @@ export default function OznakaNovi(){
     return(
         <>
         <h3>
-            Unos novog Oznakaa
+            Unos nove oznake
         </h3>
 
         <Form onSubmit={odradiSubmit}>
