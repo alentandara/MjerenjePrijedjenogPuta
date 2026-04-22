@@ -16,7 +16,8 @@ export const putevi = [
                 longitude: 12.988,
                 latitude: 46.98,
             }
-        ]
+        ],
+        oznake: [1,3]
        
     }
 ]

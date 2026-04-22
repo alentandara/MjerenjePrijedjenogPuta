@@ -18,6 +18,7 @@ export default function TipNovi(){
         e.preventDefault()
         const podaci = new FormData(e.target)
 
+        // uzmi oznake iz inputa
         const oznakeLista = podaci.get('oznake')
             ? podaci.get('oznake')
                 .split(',')
@@ -25,10 +26,12 @@ export default function TipNovi(){
                 .filter(o => o !== '')
             : [];
 
+        // spremi oznake u Oznake.js
         for(const oznaka of oznakeLista){
             await Oznake.dodaj(oznaka);
         }
 
+        // spremi tip zajedno sa oznakama
         await dodaj({
             naziv: podaci.get('naziv'),
             opis: podaci.get('opis'),
@@ -38,47 +41,26 @@ export default function TipNovi(){
 
     return(
         <>
-        <h3>Unos novog Tipa</h3>
+        <h3>
+            Unos novog Tipa
+        </h3>
 
         <Form onSubmit={odradiSubmit}>
             
-            <Row>
-                {/* LIJEVA KOLONA */}
-                <Col md={6}>
-                    <Form.Group controlId="naziv" className="mb-3">
-                        <Form.Label>Naziv</Form.Label>
-                        <Form.Control type="text" name="naziv" required />
-                    </Form.Group>
+            <Form.Group controlId="naziv">
+                <Form.Label>Naziv</Form.Label>
+                <Form.Control type="text" name="naziv" required />
+            </Form.Group>
 
-                    <Form.Group controlId="opis" className="mb-3">
-                        <Form.Label>Opis</Form.Label>
-                        <Form.Control type="text" name="opis" required />
-                    </Form.Group>
+            <Form.Group controlId="opis">
+                <Form.Label>Opis</Form.Label>
+                <Form.Control type="text" name="opis" required />
+            </Form.Group>
 
-                    <Form.Group controlId="oznake" className="mb-3">
-                        <Form.Label>Oznake (odvoji zarezom)</Form.Label>
-                        <Form.Control type="text" name="oznake" />
-                    </Form.Group>
-                </Col>
-
-                {/* DESNA KOLONA - PRAZNA POLJA */}
-                <Col md={6}>
-                    <Form.Group className="mb-3">
-                        <Form.Label>&nbsp;</Form.Label>
-                        <Form.Control type="text" placeholder="" />
-                    </Form.Group>
-
-                    <Form.Group className="mb-3">
-                        <Form.Label>&nbsp;</Form.Label>
-                        <Form.Control type="text" placeholder="" />
-                    </Form.Group>
-
-                    <Form.Group className="mb-3">
-                        <Form.Label>&nbsp;</Form.Label>
-                        <Form.Control type="text" placeholder="" />
-                    </Form.Group>
-                </Col>
-            </Row>
+            <Form.Group controlId="oznake">
+                <Form.Label>Oznake (odvoji zarezom)</Form.Label>
+                <Form.Control type="text" name="oznake" />
+            </Form.Group>
 
             <hr style={{marginTop: '50px', border: '0'}} />
 
@@ -89,7 +71,7 @@ export default function TipNovi(){
                     </Link>
                 </Col>
 
-                <Col className="text-end">
+                <Col>
                     <Button type="submit" variant="success">
                         Dodaj novi Tip
                     </Button>
