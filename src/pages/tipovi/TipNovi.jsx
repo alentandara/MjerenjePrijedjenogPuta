@@ -2,7 +2,6 @@ import { Button, Col, Form, Row } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { RouteNames } from "../../constants";
 import TipService from "../../services/tipovi/TipService";
-import Oznake from "../../services/tipovi/Oznake";
 
 export default function TipNovi(){
 
