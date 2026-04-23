@@ -51,14 +51,6 @@ export default function PutPregled() {
                 Dodavanje novog puta
             </Link>
 
-            {/* 👇 NOVO: GENERIRANJE PUTEVA */}
-            <Link
-                to={RouteNames.PUTEVI_GENERIRAJ}
-                className="btn btn-warning w-100 mb-3"
-            >
-                Generiraj puteve
-            </Link>
-
             {/* 📱 MOBITEL → kartice */}
             {isMobile && (
                 <div>

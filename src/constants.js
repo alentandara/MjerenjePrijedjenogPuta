@@ -13,7 +13,7 @@ export const RouteNames = {
     PUTEVI_KARTA: '/putevi/karta/:sifra',
 
     // ✅ DODANO - STRANICA ZA GENERIRANJE PUTEVA
-    PUTEVI_GENERIRAJ: '/putevi/generiraj',
+    GENERIRANJE_PODATAKA: '/generiraj-podatke',
 
     IZRACUN_PUTA: '/izracun',
 

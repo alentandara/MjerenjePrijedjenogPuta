@@ -17,7 +17,7 @@ import PutPromjena from './pages/putevi/PutPromjena'
 import PutKarta from './pages/putevi/PutKarta'
 
 // 👇 NOVO – import stranice za generiranje
-import PutGeneriranje from './pages/putevi/PutGeneriranje'
+import GeneriranjePodataka from './pages/GeneriranjePodataka'
 
 import OznakaPregled from './pages/oznake/OznakaPregled'
 import OznakaNovi from './pages/oznake/OznakaNovi'
@@ -41,7 +41,7 @@ function App() {
         <Route path={RouteNames.PUTEVI_KARTA} element={<PutKarta />} />
 
         {/* 👇 NOVA RUTA */}
-        <Route path={RouteNames.PUTEVI_GENERIRAJ} element={<PutGeneriranje />} />
+        <Route path={RouteNames.GENERIRANJE_PODATAKA} element={<GeneriranjePodataka />} />
 
         <Route path={RouteNames.OZNAKE} element={<OznakaPregled />} />
         <Route path={RouteNames.OZNAKE_NOVI} element={<OznakaNovi />} />

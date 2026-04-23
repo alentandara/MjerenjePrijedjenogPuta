@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Button, Container, Form, Alert, Table } from "react-bootstrap";
-import PutService from "../../services/putevi/PutService";
+import PutService from "../services/putevi/PutService";
 
-export default function PutGeneriranje() {
+export default function GeneriranjePodataka() {
 
     const [broj, setBroj] = useState(3);
     const [loading, setLoading] = useState(false);
