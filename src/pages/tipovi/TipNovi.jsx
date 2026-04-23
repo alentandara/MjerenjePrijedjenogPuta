@@ -18,21 +18,10 @@ export default function TipNovi(){
         e.preventDefault()
         const podaci = new FormData(e.target)
 
-        const oznakeLista = podaci.get('oznake')
-            ? podaci.get('oznake')
-                .split(',')
-                .map(o => o.trim())
-                .filter(o => o !== '')
-            : [];
-
-        for(const oznaka of oznakeLista){
-            await Oznake.dodaj(oznaka);
-        }
-
+    
         await dodaj({
             naziv: podaci.get('naziv'),
-            opis: podaci.get('opis'),
-            oznake: oznakeLista
+            opis: podaci.get('opis')
         })
     }
 
@@ -82,11 +71,6 @@ export default function TipNovi(){
             <Form.Group controlId="opis">
                 <Form.Label>Opis</Form.Label>
                 <Form.Control type="text" name="opis" required />
-            </Form.Group>
-
-            <Form.Group controlId="oznake">
-                <Form.Label>Oznake (odvoji zarezom)</Form.Label>
-                <Form.Control type="text" name="oznake" />
             </Form.Group>
 
             <hr style={{marginTop: '50px', border: '0'}} />
