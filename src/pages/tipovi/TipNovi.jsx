@@ -25,39 +25,10 @@ export default function TipNovi(){
         })
     }
 
-    // 🔥 GENERIRAJ TIP + OZNAKE
-    async function generirajTip(){
-
-        const nazivi = ["Hodanje", "Trčanje", "Bicikl", "Planinarenje"];
-        const oznakePool = ["brzo", "sporo", "uzbrdo", "ravno", "teško", "lagano"];
-
-        const naziv = nazivi[Math.floor(Math.random() * nazivi.length)];
-        const opis = "Auto generirani tip";
-
-        const brojOznaka = Math.floor(Math.random() * 3) + 2;
-
-        const oznakeLista = oznakePool
-            .sort(() => 0.5 - Math.random())
-            .slice(0, brojOznaka);
-
-        for(const oznaka of oznakeLista){
-            await Oznake.dodaj(oznaka);
-        }
-
-        await dodaj({
-            naziv,
-            opis,
-            oznake: oznakeLista
-        })
-    }
-
     return(
         <>
         <h3>Unos novog Tipa</h3>
 
-        <Button variant="warning" onClick={generirajTip}>
-            ⚡ Generiraj tip
-        </Button>
 
         <hr />
 
