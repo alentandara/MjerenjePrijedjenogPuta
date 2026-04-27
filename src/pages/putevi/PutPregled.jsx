@@ -44,10 +44,7 @@ export default function PutPregled() {
             : 0;
     }
 
-    function formatDatum(datum) {
-        if (!datum) return "-";
-        return new Date(datum).toLocaleString();
-    }
+  
 
     
     return (

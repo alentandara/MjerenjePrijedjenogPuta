@@ -158,6 +158,18 @@ export default function PutKarta() {
   }
 
 
+    function formatDatum(datum) {
+        if (!datum) return "-";
+        return new Date(datum).toLocaleString();
+    }
+
+      function trajanje(startTime, endTime) {
+        return startTime && endTime
+            ? ((endTime - startTime) / 1000).toFixed(1)
+            : 0;
+    }
+
+
   return (
     <>
       <Button size="sm" variant="secondary" onClick={() => generirajPDF(put)}>
