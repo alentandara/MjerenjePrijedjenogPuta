@@ -4,8 +4,9 @@ import { Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { RouteNames } from "../../constants";
 import useBreakpoint from "../../hooks/useBreakpoint";
-import jsPDF from "jspdf";
-import "../../assets/fonts/roboto"
+
+
+
 export default function PutPregled() {
 
     const navigate = useNavigate();
@@ -48,55 +49,7 @@ export default function PutPregled() {
         return new Date(datum).toLocaleString();
     }
 
-    // 🧾 PDF GENERATOR
-    function generirajPDF(put) {
-        const doc = new jsPDF();
-
-        let y = 10;
-
-        doc.setFontSize(16);
-        doc.text("Izvještaj o prijeđenom putu", 10, y);
-
-        y += 10;
-        doc.setFontSize(12);
-
-        doc.text(`Naziv: ${put.naziv}`, 10, y); y += 8;
-        doc.text(`Tip: ${put.tip}`, 10, y); y += 8;
-
-        doc.text(`Početak: ${formatDatum(put.pocetak)}`, 10, y); y += 8;
-        doc.text(`Kraj: ${formatDatum(put.kraj)}`, 10, y); y += 8;
-
-        doc.text(
-            `Trajanje: ${trajanje(
-                new Date(put.pocetak),
-                new Date(put.kraj)
-            )} s`,
-            10,
-            y
-        );
-        y += 8;
-
-        doc.text(
-            `Dužina: ${(put.duzinaPuta / 1000).toFixed(2)} km`,
-            10,
-            y
-        );
-        y += 8;
-
-        doc.text(`Opis: ${put.opis ? put.opis : "-"}`, 10, y);
-        y += 8;
-
-        // ako imaš oznake kao niz
-        if (put.oznake && put.oznake.length > 0) {
-            const oznakeText = put.oznake.map(o => o.naziv).join(", ");
-            doc.text(`Oznake: ${oznakeText}`, 10, y);
-        } else {
-            doc.text(`Oznake: -`, 10, y);
-        }
-
-        doc.save(`${put.naziv}.pdf`);
-    }
-
+    
     return (
         <>
             <Link
@@ -137,9 +90,7 @@ export default function PutPregled() {
                                     Karta
                                 </Button>
 
-                                <Button size="sm" variant="secondary" onClick={() => generirajPDF(put)}>
-                                    PDF
-                                </Button>
+                                
                             </div>
                         </div>
                     ))}
@@ -191,9 +142,7 @@ export default function PutPregled() {
                                             Karta
                                         </Button>
 
-                                        <Button size="sm" variant="secondary" onClick={() => generirajPDF(put)}>
-                                            PDF
-                                        </Button>
+                                       
                                     </div>
                                 </td>
                             </tr>
