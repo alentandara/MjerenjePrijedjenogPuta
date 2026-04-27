@@ -3,8 +3,9 @@ import PutService from "../../services/putevi/PutService";
 import { Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { RouteNames } from "../../constants";
-import useBreakpoint from "../../hooks/useBreakpoint"; // ⬅️ prilagodi putanju ako treba
-
+import useBreakpoint from "../../hooks/useBreakpoint";
+import jsPDF from "jspdf";
+import "../../assets/fonts/roboto"
 export default function PutPregled() {
 
     const navigate = useNavigate();
@@ -42,6 +43,60 @@ export default function PutPregled() {
             : 0;
     }
 
+    function formatDatum(datum) {
+        if (!datum) return "-";
+        return new Date(datum).toLocaleString();
+    }
+
+    // 🧾 PDF GENERATOR
+    function generirajPDF(put) {
+        const doc = new jsPDF();
+
+        let y = 10;
+
+        doc.setFontSize(16);
+        doc.text("Izvještaj o prijeđenom putu", 10, y);
+
+        y += 10;
+        doc.setFontSize(12);
+
+        doc.text(`Naziv: ${put.naziv}`, 10, y); y += 8;
+        doc.text(`Tip: ${put.tip}`, 10, y); y += 8;
+
+        doc.text(`Početak: ${formatDatum(put.pocetak)}`, 10, y); y += 8;
+        doc.text(`Kraj: ${formatDatum(put.kraj)}`, 10, y); y += 8;
+
+        doc.text(
+            `Trajanje: ${trajanje(
+                new Date(put.pocetak),
+                new Date(put.kraj)
+            )} s`,
+            10,
+            y
+        );
+        y += 8;
+
+        doc.text(
+            `Dužina: ${(put.duzinaPuta / 1000).toFixed(2)} km`,
+            10,
+            y
+        );
+        y += 8;
+
+        doc.text(`Opis: ${put.opis ? put.opis : "-"}`, 10, y);
+        y += 8;
+
+        // ako imaš oznake kao niz
+        if (put.oznake && put.oznake.length > 0) {
+            const oznakeText = put.oznake.map(o => o.naziv).join(", ");
+            doc.text(`Oznake: ${oznakeText}`, 10, y);
+        } else {
+            doc.text(`Oznake: -`, 10, y);
+        }
+
+        doc.save(`${put.naziv}.pdf`);
+    }
+
     return (
         <>
             <Link
@@ -51,7 +106,7 @@ export default function PutPregled() {
                 Dodavanje novog puta
             </Link>
 
-            {/* 📱 MOBITEL → kartice */}
+            {/* 📱 MOBITEL */}
             {isMobile && (
                 <div>
                     {putevi.map((put) => (
@@ -70,26 +125,20 @@ export default function PutPregled() {
                             <p><b>Trajanje:</b> {trajanje(new Date(put.pocetak), new Date(put.kraj))} s</p>
 
                             <div className="d-flex gap-2">
-                                <Button
-                                    size="sm"
-                                    onClick={() => navigate(`/putevi/${put.sifra}`)}
-                                >
+                                <Button size="sm" onClick={() => navigate(`/putevi/${put.sifra}`)}>
                                     Promjeni
                                 </Button>
 
-                                <Button
-                                    size="sm"
-                                    variant="danger"
-                                    onClick={() => obrisi(put.sifra)}
-                                >
+                                <Button size="sm" variant="danger" onClick={() => obrisi(put.sifra)}>
                                     Obriši
                                 </Button>
 
-                                <Button
-                                    size="sm"
-                                    onClick={() => navigate(`/putevi/karta/${put.sifra}`)}
-                                >
+                                <Button size="sm" onClick={() => navigate(`/putevi/karta/${put.sifra}`)}>
                                     Karta
+                                </Button>
+
+                                <Button size="sm" variant="secondary" onClick={() => generirajPDF(put)}>
+                                    PDF
                                 </Button>
                             </div>
                         </div>
@@ -97,7 +146,7 @@ export default function PutPregled() {
                 </div>
             )}
 
-            {/* 💻 TABLET + DESKTOP → tablica */}
+            {/* 💻 DESKTOP */}
             {!isMobile && (
                 <table className="table table-striped table-bordered">
                     <thead>
@@ -130,26 +179,20 @@ export default function PutPregled() {
 
                                 <td>
                                     <div className="d-flex gap-2">
-                                        <Button
-                                            size="sm"
-                                            onClick={() => navigate(`/putevi/${put.sifra}`)}
-                                        >
+                                        <Button size="sm" onClick={() => navigate(`/putevi/${put.sifra}`)}>
                                             Promjeni
                                         </Button>
 
-                                        <Button
-                                            size="sm"
-                                            variant="danger"
-                                            onClick={() => obrisi(put.sifra)}
-                                        >
+                                        <Button size="sm" variant="danger" onClick={() => obrisi(put.sifra)}>
                                             Obriši
                                         </Button>
 
-                                        <Button
-                                            size="sm"
-                                            onClick={() => navigate(`/putevi/karta/${put.sifra}`)}
-                                        >
+                                        <Button size="sm" onClick={() => navigate(`/putevi/karta/${put.sifra}`)}>
                                             Karta
+                                        </Button>
+
+                                        <Button size="sm" variant="secondary" onClick={() => generirajPDF(put)}>
+                                            PDF
                                         </Button>
                                     </div>
                                 </td>
