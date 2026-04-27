@@ -208,7 +208,8 @@ export default function PutKarta() {
       </p>
 
       {isLoaded && (
-        <GoogleMap ref={mapRef}
+        <div ref={mapRef} style={{ width: "100%", height: "400px" }}>
+        <GoogleMap
           mapContainerStyle={{ width: "100%", height: "400px" }}
           onLoad={handleOnLoad}
         >
@@ -225,6 +226,7 @@ export default function PutKarta() {
           {path.length > 0 && <Marker position={path[0]} />}
           {path.length > 1 && <Marker position={path[path.length - 1]} />}
         </GoogleMap>
+        </div>
       )}
 
       <hr style={{ marginTop: "50px", border: "0" }} />
