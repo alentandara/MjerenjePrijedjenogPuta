@@ -139,6 +139,7 @@ export default function PutKarta() {
     }
 
 
+    try {
     // html2canvas pravi screenshot tog elementa
     const canvas = await html2canvas(element, {
       useCORS: true, // Ključno za Google Maps slike!
@@ -155,6 +156,9 @@ export default function PutKarta() {
     doc.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
 
     doc.save(`${put.naziv}.pdf`);
+    } catch (error) {
+      alert(error.message)
+    }
   }
 
 
