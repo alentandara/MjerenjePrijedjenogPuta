@@ -150,7 +150,7 @@ export default function GeneriranjePodataka() {
             <h2>Generiranje podataka</h2>
 
             {poruka && (
-                <Alert variant={poruka.tip}>
+                <Alert style={{zIndex: -1}} variant={poruka.tip}>
                     {poruka.tekst}
                 </Alert>
             )}
