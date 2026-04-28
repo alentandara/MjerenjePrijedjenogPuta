@@ -1,4 +1,4 @@
-export const IME_APLIKACIJE = 'MJERENJE PRIJEDJENOG PUTA';
+export const IME_APLIKACIJE = 'MJERENJE PRIJEĐENOG PUTA';
 
 export const RouteNames = {
     HOME: '/',

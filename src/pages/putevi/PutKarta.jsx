@@ -153,7 +153,7 @@ export default function PutKarta() {
     const pdfWidth = doc.internal.pageSize.getWidth();
     const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
 
-    doc.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+    doc.addImage(imgData, 'PNG', 0, 90, pdfWidth, pdfHeight);
 
     doc.save(`${put.naziv}.pdf`);
     } catch (error) {
