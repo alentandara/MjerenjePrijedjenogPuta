@@ -4,6 +4,9 @@ import { Button, Container, Form, Alert, Table } from "react-bootstrap";
 import PutService from "../services/putevi/PutService";
 import TipService from "../services/tipovi/TipService";
 import OznakaService from "../services/oznake/OznakaService";
+import oznakeMemorija from '../services/oznake/OznakaPodaci' 
+import puteviMemorija from '../services/putevi/PutPodaci' 
+import tipoviMemorija from '../services/tipovi/TipPodaci' 
 
 export default function GeneriranjePodataka() {
 
@@ -148,7 +151,9 @@ export default function GeneriranjePodataka() {
         setPoruka(null);
 
         try {
-           xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+           localStorage.setItem('oznake',JSON.stringify(oznakeMemorija.oznake))
+           localStorage.setItem('putevi',JSON.stringify(puteviMemorija.putevi))
+           localStorage.setItem('tipovi',JSON.stringify(tipoviMemorija.tipovi))
 
             setPoruka({
                 tip: "success",

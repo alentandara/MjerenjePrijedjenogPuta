@@ -20,3 +20,7 @@ export const oznake = [
        
     },
 ]
+
+export default{
+    oznake
+}

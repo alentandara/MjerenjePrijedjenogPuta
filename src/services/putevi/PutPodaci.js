@@ -21,3 +21,7 @@ export const putevi = [
        
     }
 ]
+
+export default{
+    putevi
+}

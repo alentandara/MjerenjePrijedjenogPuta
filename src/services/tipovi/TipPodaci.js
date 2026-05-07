@@ -24,3 +24,7 @@ export const tipovi = [
        
     },
 ]
+
+export default{
+    tipovi
+}
