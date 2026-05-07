@@ -143,6 +143,27 @@ export default function GeneriranjePodataka() {
 
         setLoading(false);
     };
+     const presipajSve = async () => {
+        setLoading(true);
+        setPoruka(null);
+
+        try {
+           xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+            setPoruka({
+                tip: "success",
+                tekst: `Generirano: ${broj} puteva, tipova i oznaka!`
+            });
+
+        } catch (err) {
+            setPoruka({
+                tip: "danger",
+                tekst: "Greška: " + err.message
+            });
+        }
+
+        setLoading(false);
+    };
 
     return (
         <Container className="mt-4">
@@ -170,6 +191,11 @@ export default function GeneriranjePodataka() {
                 <div className="d-flex gap-2 mt-3">
                     <Button onClick={generirajSve}>
                         Generiraj sve (putevi + tipovi + oznake)
+                    </Button>
+                </div>
+                <div className="d-flex gap-2 mt-3">
+                    <Button onClick={presipajSve}>
+                        Presipaj sve (putevi + tipovi + oznake)
                     </Button>
                 </div>
             </Form>

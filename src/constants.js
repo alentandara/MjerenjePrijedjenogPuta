@@ -12,7 +12,6 @@ export const RouteNames = {
     PUTEVI_PROMJENA: '/putevi/:sifra',
     PUTEVI_KARTA: '/putevi/karta/:sifra',
 
-    // ✅ DODANO - STRANICA ZA GENERIRANJE PUTEVA
     GENERIRANJE_PODATAKA: '/generiraj-podatke',
 
     IZRACUN_PUTA: '/izracun',
@@ -22,5 +21,5 @@ export const RouteNames = {
     OZNAKE_PROMJENA: '/oznake/:sifra',
 };
 
-// memorija, localStorage
+
 export const DATA_SOURCE = 'localStorage';
