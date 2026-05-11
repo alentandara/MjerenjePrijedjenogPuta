@@ -193,6 +193,27 @@ export default function PutKarta() {
 
   return (
     <>
+
+    <Row style={{marginTop: '1rem'}}>
+      <Col md={6} xs={6} sm={6}>
+      <Link
+            to={RouteNames.PUTEVI}
+            className="btn btn-danger"
+          >
+            Odustani
+          </Link>
+      </Col>
+      <Col md={6} xs={6} sm={6} style={{textAlign: 'right'}}>
+      <Button
+            variant="secondary"
+            onClick={() => generirajPDF(put)}
+          >
+            PDF
+          </Button>
+      </Col>
+    </Row>
+    
+
       <div className="mb-3">
         <span
           style={{
@@ -266,19 +287,9 @@ export default function PutKarta() {
       {/* PDF desno, Odustani lijevo */}
       <Row className="mb-4 mt-4">
         <Col className="d-flex justify-content-between">
-          <Link
-            to={RouteNames.PUTEVI}
-            className="btn btn-danger"
-          >
-            Odustani
-          </Link>
+          
 
-          <Button
-            variant="secondary"
-            onClick={() => generirajPDF(put)}
-          >
-            PDF
-          </Button>
+          
         </Col>
       </Row>
 
